@@ -1,0 +1,41 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: default
+  labels:
+    app: postgres-deployment
+spec:
+  selector:
+    matchLabels:
+      app: postgres-deployment
+  template:
+    metadata:
+      labels:
+        app: postgres-deployment
+    spec:
+      containers:
+        - name: postgres-service
+          image: postgres:16.0-alpine
+          env:
+            - name: POSTGRES_USER
+              value: "lglabs"
+            - name: POSTGRES_PASSWORD
+              value: "lgpass"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  namespace: default
+  labels:
+    app: postgres-service
+spec:
+  selector:
+    app: postgres-deployment
+  ports:
+    - name: postgres-service-port
+      protocol: TCP
+      port: 5432
+  type: LoadBalancer

@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blank-deployment
+  namespace: default
+  labels:
+    app: blank-deployment
+spec:
+  selector:
+    matchLabels:
+      app: blank-deployment
+  template:
+    metadata:
+      labels:
+        app: blank-deployment
+    spec:
+      containers:
+        - name: blank-service
+          image: com.blanksystem/blank-service:1.0.0-alpha
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres-service:5432/postgres?currentSchema=order&binaryTransfer=true&reWriteBatchedInserts=true&stringtype=unspecified"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "lglabs"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "lgpass"
+            - name: KAFKA-CONFIG_BOOTSTRAP-SERVERS
+              value: "local-confluent-kafka-cp-kafka-headless:9092"
+            - name: KAFKA-CONFIG_SCHEMA-REGISTRY-URL
+              value: "http://local-confluent-kafka-cp-schema-registry:8081"
+            - name: BUILD_FOLDER
+              value: .
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "1024Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blank-service
+  namespace: default
+  labels:
+    app: blank-service
+spec:
+  selector:
+    app: blank-deployment
+  ports:
+    - name: blank-service-port
+      protocol: TCP
+      port: 8185
+  type: LoadBalancer
