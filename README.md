@@ -117,9 +117,9 @@ The MIT License (MIT). Please see [License][LIC] for more information.
 [0]: https://img.shields.io/badge/LgLabs-community-blue?style=flat-square
 [1]: https://lufgarciaqu.medium.com
 [2]: https://img.shields.io/badge/license-MIT-green?style=flat-square
-[3]: https://github.com/lg-labs-pentagon/lg5-spring
+[3]: https://lg-labs-pentagon.github.io/lg5-spring/
 [4]: https://github.com/confluentinc/cp-helm-charts
-[5]: https://github.com/lg-labs/food-ordering-system/tree/main/order-service
+[5]: https://lg-labs.github.io/blank-service/
 
 
 [LIC]: LICENSE
